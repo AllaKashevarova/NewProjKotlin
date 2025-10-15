@@ -16,6 +16,7 @@ import kotlinx.serialization.json.Json
 class PetApiClient {
 
     private val baseUrl = ""
+    private val test = ""
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
