@@ -8,13 +8,13 @@ import io.ktor.http.*
 
 class UserApiClient : BaseApiClient() {
 
-    suspend fun createUser(user: User): User =
+    suspend fun createUser(user: User): HttpResponse =
         client.post("${ApiConfig.BASE_URL}${ApiConfig.USER}") {
             contentType(ContentType.Application.Json)
             setBody(user)
-        }.body()
+        }
 
-    suspend fun getUserByUsername(username: String): User =
+    suspend fun getUser(username: String): User =
         client.get("${ApiConfig.BASE_URL}${ApiConfig.USER}/$username") {
             accept(ContentType.Application.Json)
         }.body()
