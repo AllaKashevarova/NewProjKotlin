@@ -1,7 +1,6 @@
 package api.tests
 
 import api.client.StoreApiClient
-import api.model.Order
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -13,13 +12,7 @@ class StoreApiOrderTest {
 
     @Test
     fun `should place and fetch order`() = runBlocking {
-        val orderRequest =
-            Order(
-                petId = 1L,
-                quantity = 1,
-                status = "placed",
-                complete = false,
-            )
+        val orderRequest = OrderTestDataFactory.newPlacedOrder(petId = 1L, quantity = 1)
 
         val createdOrder = client.placeOrder(orderRequest)
         assertNotNull(createdOrder.id, "Created order should have an id")
