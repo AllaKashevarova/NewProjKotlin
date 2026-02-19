@@ -1,7 +1,6 @@
 package api.tests
 
 import api.client.StoreApiClient
-import api.model.Order
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFailsWith
@@ -13,13 +12,7 @@ class StoreDeleteOrderTest {
 
     @Test
     fun `should delete order and fail to fetch afterwards`() = runBlocking {
-        val orderRequest =
-            Order(
-                petId = 1L,
-                quantity = 1,
-                status = "placed",
-                complete = false,
-            )
+        val orderRequest = OrderTestDataFactory.newPlacedOrder(petId = 1L, quantity = 1)
 
         // Place a new order
         val createdOrder = client.placeOrder(orderRequest)
