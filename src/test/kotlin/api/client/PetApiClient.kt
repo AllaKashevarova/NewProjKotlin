@@ -1,35 +1,34 @@
-@file:Suppress("ktlint:standard:no-wildcard-imports")
-
 package api.client
 
 import api.config.ApiConfig
 import api.model.Pet
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.contentnegotiation.*
+import api.model.PetStatus
+import io.ktor.client.call.body
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
-import kotlinx.serialization.json.Json
 
-class PetApiClient {
+class PetApiClient : BaseApiClient() {
 
-    private val baseUrl = ""
-    private val test = ""
-
-    private val client = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(Json { ignoreUnknownKeys = true })
-        }
-    }
-
-    suspend fun getAvailablePets(): List<Pet> {
-        return client.get("${ApiConfig.BASE_URL}${ApiConfig.PETS_BY_STATUS}") {
-            url {
-                parameters.append("status", "available")
-            }
+    suspend fun getAvailablePets(): List<Pet> =
+        client.get("${ApiConfig.BASE_URL}${ApiConfig.PET_FIND_BY_STATUS}") {
+            parameter("status", PetStatus.AVAILABLE.value)
             accept(ContentType.Application.Json)
         }.body()
+
+    suspend fun addPet(pet: Pet): Pet =
+        client.post("${ApiConfig.BASE_URL}${ApiConfig.PET}") {
+            contentType(ContentType.Application.Json)
+            setBody(pet)
+        }.body()
+
+    suspend fun getPetById(petId: Long): Pet =
+        client.get("${ApiConfig.BASE_URL}${ApiConfig.PET}/$petId") {
+            accept(ContentType.Application.Json)
+        }.body()
+
+    suspend fun deletePet(petId: Long) {
+        client.delete("${ApiConfig.BASE_URL}${ApiConfig.PET}/$petId") {
+            accept(ContentType.Application.Json)
+        }
     }
 }
