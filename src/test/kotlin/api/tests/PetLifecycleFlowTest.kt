@@ -4,7 +4,6 @@ import api.client.PetApiClient
 import io.ktor.client.plugins.ClientRequestException
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
@@ -18,14 +17,18 @@ class PetLifecycleFlowTest {
 
         val createdPet = client.addPet(petRequest)
         assertNotNull(createdPet.id, "Created pet should have an id")
-        assertEquals(petRequest.id, createdPet.id, "Created pet id should match requested id")
-        assertEquals(petRequest.name, createdPet.name, "Created pet name should match requested name")
-        assertEquals(petRequest.status, createdPet.status, "Created pet status should match requested status")
+        ApiAssertions.assertPetCoreFields(
+            expected = petRequest,
+            actual = createdPet,
+            context = "Created pet",
+        )
 
         val fetchedPet = client.getPetById(createdPet.id!!)
-        assertEquals(createdPet.id, fetchedPet.id, "Fetched pet id should match created pet id")
-        assertEquals(createdPet.name, fetchedPet.name, "Fetched pet name should match created pet name")
-        assertEquals(createdPet.status, fetchedPet.status, "Fetched pet status should match created pet status")
+        ApiAssertions.assertPetCoreFields(
+            expected = createdPet,
+            actual = fetchedPet,
+            context = "Fetched pet",
+        )
 
         client.deletePet(createdPet.id!!)
 
