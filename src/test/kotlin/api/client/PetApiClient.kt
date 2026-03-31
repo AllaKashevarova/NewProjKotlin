@@ -10,8 +10,11 @@ import io.ktor.http.*
 class PetApiClient : BaseApiClient() {
 
     suspend fun getAvailablePets(): List<Pet> =
+        getPetsByStatus(PetStatus.AVAILABLE)
+
+    suspend fun getPetsByStatus(status: PetStatus): List<Pet> =
         client.get("${ApiConfig.BASE_URL}${ApiConfig.PET_FIND_BY_STATUS}") {
-            parameter("status", PetStatus.AVAILABLE.value)
+            parameter("status", status.value)
             accept(ContentType.Application.Json)
         }.body()
 
