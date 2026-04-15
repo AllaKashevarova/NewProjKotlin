@@ -25,6 +25,12 @@ class UserApiClient : BaseApiClient() {
         }
     }
 
+    suspend fun updateUser(username: String, user: User): HttpResponse =
+        client.put("${ApiConfig.BASE_URL}${ApiConfig.USER}/$username") {
+            contentType(ContentType.Application.Json)
+            setBody(user)
+        }
+
     suspend fun login(username: String, password: String): String =
         client.get("${ApiConfig.BASE_URL}${ApiConfig.USER_LOGIN}") {
             parameter("username", username)
