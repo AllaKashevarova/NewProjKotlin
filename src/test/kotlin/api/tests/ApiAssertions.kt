@@ -2,6 +2,7 @@ package api.tests
 
 import api.model.Order
 import api.model.Pet
+import api.model.User
 import kotlin.test.assertEquals
 
 object ApiAssertions {
@@ -18,6 +19,15 @@ object ApiAssertions {
         assertEquals(expected.quantity, actual.quantity, "$context: order quantity should match")
         assertEquals(expected.status, actual.status, "$context: order status should match")
         assertEquals(expected.complete, actual.complete, "$context: order complete flag should match")
+    }
+
+    fun assertUserCoreFields(expected: User, actual: User, context: String) {
+        assertEquals(expected.username, actual.username, "$context: username should match")
+        assertEquals(expected.firstName, actual.firstName, "$context: firstName should match")
+        assertEquals(expected.lastName, actual.lastName, "$context: lastName should match")
+        assertEquals(expected.email, actual.email, "$context: email should match")
+        assertEquals(expected.phone, actual.phone, "$context: phone should match")
+        assertEquals(expected.userStatus, actual.userStatus, "$context: userStatus should match")
     }
 }
 
