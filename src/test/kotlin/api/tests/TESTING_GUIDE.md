@@ -8,6 +8,7 @@ This folder contains integration-style automated tests for Petstore API workflow
 - Store order placement and validation flows
 - User account lifecycle and profile update flows
 - Utility/unit tests for test data builders and response parsers
+- Utility/unit tests for analytics helpers and API config contracts
 
 ## Supporting test utilities
 
@@ -17,6 +18,8 @@ This folder contains integration-style automated tests for Petstore API workflow
   centralize common field-level checks to keep tests readable.
 - `SessionResponseParser`:
   extracts login session token from API response text.
+- `InventoryAnalytics`:
+  provides safe inventory calculations used by fast unit tests.
 
 ## Design principles
 
@@ -24,3 +27,4 @@ This folder contains integration-style automated tests for Petstore API workflow
 - Validate both happy path and failure behavior.
 - Always clean up created data when feasible.
 - Add unit tests for test helpers to prevent silent test infrastructure regressions.
+- Add contract tests for API configuration constants to catch accidental endpoint drift.
