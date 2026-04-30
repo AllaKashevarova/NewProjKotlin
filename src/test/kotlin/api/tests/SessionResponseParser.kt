@@ -8,9 +8,14 @@ object SessionResponseParser {
      */
     fun extractSessionToken(loginResponse: String): String {
         val marker = "session:"
-        val markerIndex = loginResponse.indexOf(marker)
+        val markerIndex = loginResponse.indexOf(marker, ignoreCase = true)
         if (markerIndex == -1) return ""
-        return loginResponse.substring(markerIndex + marker.length).trim()
+
+        val rawToken = loginResponse.substring(markerIndex + marker.length).trim()
+        if (rawToken.isEmpty()) return ""
+
+        // Keep only token-safe chars to avoid trailing punctuation from message text.
+        return rawToken.takeWhile { it.isLetterOrDigit() || it == '-' || it == '_' }
     }
 }
 
