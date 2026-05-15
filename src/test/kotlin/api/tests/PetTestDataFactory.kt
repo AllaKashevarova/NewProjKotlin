@@ -10,7 +10,8 @@ object PetTestDataFactory {
         namePrefix: String = "auto-pet",
         status: PetStatus = PetStatus.AVAILABLE,
     ): Pet {
-        val uniqueName = "$namePrefix-${UUID.randomUUID().toString().replace("-", "").take(8)}"
+        val suffix = UUID.randomUUID().toString().replace("-", "").take(8)
+        val uniqueName = PetNameValidator.sanitize("$namePrefix-$suffix")
         val id = System.currentTimeMillis()
 
         return Pet(

@@ -9,6 +9,8 @@ This folder contains integration-style automated tests for Petstore API workflow
 - User account lifecycle and profile update flows
 - Utility/unit tests for test data builders and response parsers
 - Utility/unit tests for analytics helpers and API config contracts
+- Store inventory analytics flow against live Petstore inventory
+- Pet name validation, order pricing helpers, and inventory report builders
 
 ## Supporting test utilities
 
@@ -18,8 +20,12 @@ This folder contains integration-style automated tests for Petstore API workflow
   centralize common field-level checks to keep tests readable.
 - `SessionResponseParser`:
   extracts login session token from API response text.
-- `InventoryAnalytics`:
-  provides safe inventory calculations used by fast unit tests.
+- `InventoryAnalytics` / `InventoryReportBuilder`:
+  provides safe inventory calculations and summarized reports for unit and flow tests.
+- `PetNameValidator`:
+  keeps generated pet names API-safe before requests are sent.
+- `OrderPricing`:
+  calculates order line totals in cents for budget checks in store scenarios.
 
 ## Design principles
 
