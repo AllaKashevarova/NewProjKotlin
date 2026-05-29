@@ -29,6 +29,12 @@ class PetApiClient : BaseApiClient() {
             accept(ContentType.Application.Json)
         }.body()
 
+    suspend fun updatePet(pet: Pet): Pet =
+        client.put("${ApiConfig.BASE_URL}${ApiConfig.PET}") {
+            contentType(ContentType.Application.Json)
+            setBody(pet)
+        }.body()
+
     suspend fun deletePet(petId: Long) {
         client.delete("${ApiConfig.BASE_URL}${ApiConfig.PET}/$petId") {
             accept(ContentType.Application.Json)

@@ -13,6 +13,8 @@ This folder contains integration-style automated tests for Petstore API workflow
 - Pet name validation, order pricing helpers, and inventory report builders
 - Pet status parsing, order status transition rules, and credential validation
 - Pet list summaries and store order budget flow checks
+- Pet status updates, sold-pet discovery, and user session token extraction flows
+- URL builder and pet list matcher helpers for readable assertions
 
 ## Supporting test utilities
 
@@ -34,6 +36,12 @@ This folder contains integration-style automated tests for Petstore API workflow
   validates order status values and allowed lifecycle transitions.
 - `UserCredentialsValidator`:
   guards generated usernames and passwords before user API flows.
+- `ApiUrlBuilder`:
+  composes base URLs and substitutes `{param}` placeholders in endpoint templates.
+- `PetMatchers`:
+  filters pets by status, name prefix, and photo presence in list assertions.
+- `UserSessionHelper`:
+  extracts session tokens from login responses for user auth flow tests.
 
 ## Test layers
 
