@@ -22,5 +22,8 @@ object PetTestDataFactory {
             status = status.value,
         )
     }
+
+    fun withStatus(pet: Pet, status: PetStatus): Pet =
+        pet.copy(status = status.value)
 }
 
