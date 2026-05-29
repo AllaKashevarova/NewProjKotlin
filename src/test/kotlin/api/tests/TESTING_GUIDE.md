@@ -11,6 +11,8 @@ This folder contains integration-style automated tests for Petstore API workflow
 - Utility/unit tests for analytics helpers and API config contracts
 - Store inventory analytics flow against live Petstore inventory
 - Pet name validation, order pricing helpers, and inventory report builders
+- Pet status parsing, order status transition rules, and credential validation
+- Pet list summaries and store order budget flow checks
 
 ## Supporting test utilities
 
@@ -26,6 +28,20 @@ This folder contains integration-style automated tests for Petstore API workflow
   keeps generated pet names API-safe before requests are sent.
 - `OrderPricing`:
   calculates order line totals in cents for budget checks in store scenarios.
+- `PetStatusParser` / `PetListSummaryBuilder`:
+  normalize pet statuses and summarize lists returned by find-by-status calls.
+- `OrderStatusRules`:
+  validates order status values and allowed lifecycle transitions.
+- `UserCredentialsValidator`:
+  guards generated usernames and passwords before user API flows.
+
+## Test layers
+
+| Layer | Examples | Needs network |
+| --- | --- | --- |
+| Unit | `*ParserTest`, `*RulesTest`, `*SummaryTest` | No |
+| Contract | `ApiConfigContractTest` | No |
+| Flow / integration | `*FlowTest`, `PetApiTest` | Yes |
 
 ## Design principles
 
