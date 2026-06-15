@@ -15,6 +15,8 @@ This folder contains integration-style automated tests for Petstore API workflow
 - Pet list summaries and store order budget flow checks
 - Pet status updates, sold-pet discovery, and user session token extraction flows
 - URL builder and pet list matcher helpers for readable assertions
+- Order quantity validation, HTTP status checks, inventory low-stock alerts, and photo URL validation
+- Pending pet flow, quantity-based store orders, and user creation HTTP status checks
 
 ## Supporting test utilities
 
@@ -42,6 +44,14 @@ This folder contains integration-style automated tests for Petstore API workflow
   filters pets by status, name prefix, and photo presence in list assertions.
 - `UserSessionHelper`:
   extracts session tokens from login responses for user auth flow tests.
+- `OrderQuantityValidator`:
+  validates store order quantities before live API placement.
+- `HttpStatusAssertions`:
+  centralizes 2xx and exact HTTP status checks for client responses.
+- `InventoryThresholdChecker`:
+  flags inventory statuses at or below a configurable stock threshold.
+- `PetPhotoUrlValidator`:
+  ensures generated pet payloads include valid HTTP(S) photo URLs.
 
 ## Test layers
 
