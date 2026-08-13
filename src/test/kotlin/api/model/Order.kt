@@ -1,7 +1,6 @@
 package api.model
 
 import kotlinx.serialization.Serializable
-import java.time.Instant
 
 @Serializable
 data class Order(
