@@ -1,8 +1,11 @@
 package api.tests
 
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class UserTestDataFactoryTest {
 
@@ -27,6 +30,39 @@ class UserTestDataFactoryTest {
         assertNotEquals(original.email, updated.email, "Expected email to be updated")
         assertNotEquals(original.password, updated.password, "Expected password to be updated")
         assertEquals(2, updated.userStatus, "Expected updated userStatus")
+    }
+
+    @Test
+    fun `should create minimal user with only a username`() {
+        val user = UserTestDataFactory.newMinimalUser("min_user")
+
+        assertEquals("min_user", user.username, "Expected provided username")
+        assertNull(user.id, "Expected no id")
+        assertNull(user.firstName, "Expected no firstName")
+        assertNull(user.email, "Expected no email")
+        assertNull(user.password, "Expected no password")
+    }
+
+    @Test
+    fun `should generate unique username for minimal user by default`() {
+        val first = UserTestDataFactory.newMinimalUser()
+        val second = UserTestDataFactory.newMinimalUser()
+
+        assertNotEquals(first.username, second.username, "Expected unique default usernames")
+    }
+
+    @Test
+    fun `should build batch of users with unique usernames`() {
+        val users = UserTestDataFactory.newUserBatch(count = 4, prefix = "bulk")
+
+        assertEquals(4, users.size, "Expected requested batch size")
+        assertEquals(4, users.map { it.username }.toSet().size, "Expected unique usernames")
+        assertTrue(users.all { it.username.startsWith("bulk_") }, "Expected usernames to use the prefix")
+    }
+
+    @Test
+    fun `should reject negative batch size`() {
+        assertThrows<IllegalArgumentException> { UserTestDataFactory.newUserBatch(count = -1) }
     }
 }
 
