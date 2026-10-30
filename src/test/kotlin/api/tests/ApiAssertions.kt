@@ -13,6 +13,19 @@ object ApiAssertions {
         assertEquals(expected.status, actual.status, "$context: pet status should match")
     }
 
+    fun assertPetTags(pet: Pet, expectedTags: Set<String>, context: String) {
+        val expected = expectedTags.map { it.trim().lowercase() }.toSet()
+        assertEquals(expected, PetTagNormalizer.normalize(pet).toSet(), "$context: pet tags should match")
+    }
+
+    fun assertSamePetIds(expected: List<Pet>, actual: List<Pet>, context: String) {
+        assertEquals(
+            expected.map { it.id }.sorted(),
+            actual.map { it.id }.sorted(),
+            "$context: pet ids should match regardless of order",
+        )
+    }
+
     fun assertOrderCoreFields(expected: Order, actual: Order, context: String) {
         assertEquals(expected.id, actual.id, "$context: order id should match")
         assertEquals(expected.petId, actual.petId, "$context: order petId should match")
