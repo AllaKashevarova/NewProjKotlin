@@ -27,6 +27,28 @@ object PetTestDataFactory {
     fun newPendingPet(namePrefix: String = "auto-pending"): Pet =
         newAvailablePet(namePrefix = namePrefix, status = PetStatus.PENDING)
 
+    fun newSoldPet(namePrefix: String = "auto-sold"): Pet =
+        newAvailablePet(namePrefix = namePrefix, status = PetStatus.SOLD)
+
+    fun newPetBatch(
+        count: Int,
+        status: PetStatus = PetStatus.AVAILABLE,
+        namePrefix: String = "auto-batch",
+    ): List<Pet> {
+        require(count >= 0) { "count must not be negative" }
+
+        val baseId = System.currentTimeMillis()
+        return List(count) { index ->
+            newAvailablePet(namePrefix = "$namePrefix-$index", status = status)
+                .copy(id = baseId + index)
+        }
+    }
+
+    fun transitionedTo(pet: Pet, status: PetStatus): Pet {
+        PetStatusTransitions.requireTransition(pet.status, status)
+        return withStatus(pet, status)
+    }
+
     fun withTags(pet: Pet, tagNames: List<String>): Pet {
         val tags = tagNames.mapIndexed { index, name ->
             Tag(id = index.toLong() + 1, name = name)
