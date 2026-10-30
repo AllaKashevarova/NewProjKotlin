@@ -16,6 +16,14 @@ object UserTestDataFactory {
             userStatus = 1,
         )
 
+    fun newMinimalUser(username: String = TestDataFactory.uniqueUsername("minimal")): User =
+        User(username = username)
+
+    fun newUserBatch(count: Int, prefix: String = "batch"): List<User> {
+        require(count >= 0) { "count must not be negative" }
+        return List(count) { TestDataFactory.newUser(TestDataFactory.uniqueUsername(prefix)) }
+    }
+
     fun updatedUserProfile(original: User): User {
         val username = original.username
         return User(
